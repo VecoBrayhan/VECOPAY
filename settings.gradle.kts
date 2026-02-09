@@ -25,6 +25,8 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
+        // Agregar repositorio de Maven para Supabase
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
