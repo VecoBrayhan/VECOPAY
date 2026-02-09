@@ -38,7 +38,6 @@ class SupabaseDataSource {
                 this.email = email
                 this.password = password
             }
-
             // Después del login, obtener el usuario actual
             val currentUser = supabase.auth.currentUserOrNull()
             currentUser?.let { user ->
