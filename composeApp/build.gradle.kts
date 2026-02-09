@@ -57,13 +57,6 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
-
-            // Voyager Navigation
-            implementation(libs.voyager.navigator)
-            implementation(libs.voyager.screenmodel)
-            implementation(libs.voyager.bottom.sheet)
-            implementation(libs.voyager.tab)
-            implementation(libs.voyager.transitions)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
