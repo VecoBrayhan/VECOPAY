@@ -7,90 +7,101 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import com.example.vecopay.presentation.main.MainScreen
 
-@Composable
-fun LoginScreen(
-    viewModel: AuthViewModel,
-    onNavigateToSignUp: () -> Unit = {},
-    onLoginSuccess: () -> Unit = {}
-) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+/**
+ * Pantalla de Login
+ * Esta es la pantalla inicial de la aplicación
+ */
+class LoginScreen(
+    private val viewModel: AuthViewModel
+) : Screen {
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
 
-    val authState by viewModel.authState.collectAsState()
+        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
 
-    LaunchedEffect(authState.isSuccess) {
-        if (authState.isSuccess) {
-            onLoginSuccess()
-        }
-    }
+        val authState by viewModel.authState.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Iniciar Sesión",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 32.dp)
-        )
-
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Email") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            enabled = !authState.isLoading
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Contraseña") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
-            enabled = !authState.isLoading
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        if (authState.error != null) {
-            Text(
-                text = authState.error ?: "",
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-        }
-
-        Button(
-            onClick = { viewModel.signIn(email, password) },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = !authState.isLoading
-        ) {
-            if (authState.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp),
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            } else {
-                Text("Iniciar Sesión")
+        // Navegar a MainScreen cuando el login sea exitoso
+        LaunchedEffect(authState.isSuccess) {
+            if (authState.isSuccess) {
+                navigator.replaceAll(MainScreen())
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        TextButton(
-            onClick = onNavigateToSignUp,
-            enabled = !authState.isLoading
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Text("¿No tienes cuenta? Regístrate")
+            Text(
+                text = "Iniciar Sesión",
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(bottom = 32.dp)
+            )
+
+            OutlinedTextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                enabled = !authState.isLoading
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Contraseña") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation(),
+                enabled = !authState.isLoading
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            if (authState.error != null) {
+                Text(
+                    text = authState.error ?: "",
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            }
+
+            Button(
+                onClick = { viewModel.signIn(email, password) },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !authState.isLoading
+            ) {
+                if (authState.isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                } else {
+                    Text("Iniciar Sesión")
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            TextButton(
+                onClick = { /* TODO: Navegar a SignUp */ },
+                enabled = !authState.isLoading
+            ) {
+                Text("¿No tienes cuenta? Regístrate")
+            }
         }
     }
 }
