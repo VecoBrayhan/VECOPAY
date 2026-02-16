@@ -19,8 +19,7 @@ supabase = "2.6.1"
 kotlinx-coroutines = "1.8.0"
 kotlinx-serialization = "1.6.3"
 kotlinx-datetime = "0.6.0"
-voyager = "1.0.0"
-
+voyager = "1.1.0-beta02"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }

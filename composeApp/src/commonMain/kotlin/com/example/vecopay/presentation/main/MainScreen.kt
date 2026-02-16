@@ -22,6 +22,10 @@ import com.example.vecopay.presentation.navigation.tabs.*
  * - HomeTab, AccountsTab, HistoryTab, DebtsTab
  */
 class MainScreen : Screen {
+
+    // Key único para evitar problemas de lifecycle
+    override val key = "main_screen"
+
     @Composable
     override fun Content() {
         TabNavigator(HomeTab) {

@@ -3,25 +3,45 @@ package com.example.vecopay.presentation.profile
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Person // Necesario para el icono del Tab
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
 
-/**
- * Pantalla de Perfil/Configuración
- * Se accede desde el icono de persona en el AppBar
- */
-class ProfileScreen : Screen {
+// CAMBIO 1: Usamos 'object' y hereda de 'Tab' en lugar de 'Screen'
+object ProfileTab : Tab {
+
+    // CAMBIO 2: Implementamos las opciones del Tab (Icono y Título)
+    override val options: TabOptions
+        @Composable
+        get() {
+            val title = "Perfil"
+            val icon = rememberVectorPainter(Icons.Default.Person)
+
+            return remember {
+                TabOptions(
+                    index = 99u, // Un índice alto para que no estorbe
+                    title = title,
+                    icon = icon
+                )
+            }
+        }
+
     @Composable
     override fun Content() {
+        // Obtenemos el navegador raíz para poder hacer "pop" (volver atrás)
+        // Nota: Al ser un Tab, el 'pop' podría comportarse distinto dependiendo de tu configuración en MainScreen
         val navigator = LocalNavigator.currentOrThrow
 
         Scaffold(

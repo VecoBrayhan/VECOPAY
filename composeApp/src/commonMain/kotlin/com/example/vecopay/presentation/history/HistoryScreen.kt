@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.vecopay.presentation.components.VecoPayAppBar
-import com.example.vecopay.presentation.profile.ProfileScreen
+import com.example.vecopay.presentation.profile.ProfileTab
 
 /**
  * Pantalla de Historial
@@ -27,7 +27,8 @@ fun HistoryScreen() {
         topBar = {
             VecoPayAppBar(
                 onProfileClick = {
-                    navigator.push(ProfileScreen())
+                    // CORRECCIÓN: Sin paréntesis
+                    navigator.push(ProfileTab)
                 }
             )
         }

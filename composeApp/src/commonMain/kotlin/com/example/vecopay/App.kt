@@ -3,7 +3,6 @@ package com.example.vecopay
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.transitions.SlideTransition
 import com.example.vecopay.di.AppModule
 import com.example.vecopay.presentation.auth.LoginScreen
 
@@ -21,9 +20,7 @@ fun App() {
         // Inicializamos el ViewModel usando el AppModule
         val authViewModel = remember { AppModule.provideAuthViewModel() }
 
-        // Navigator de Voyager con transiciones suaves
-        Navigator(LoginScreen(authViewModel)) { navigator ->
-            SlideTransition(navigator)
-        }
+        // Navigator de Voyager - Simplificado sin transiciones por ahora
+        Navigator(LoginScreen(authViewModel))
     }
 }
